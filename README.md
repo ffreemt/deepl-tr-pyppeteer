@@ -98,7 +98,7 @@ deepl-tr-pp --helpfull
 
   * git clone the repo `https://github.com/ffreemt/deepl-tr-pyppeteer`,
 `cd deepl-tr-pyppeteer`
-    * Or fork first and clone pull your own repo.
+    * Or fork first and `git pull` your own repo.
 
   * `poetry install`
 
