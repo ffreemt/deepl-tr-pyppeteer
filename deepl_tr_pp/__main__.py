@@ -136,7 +136,7 @@ def proc_argv(argv):  # noqa
     # """
 
     filepath = FLAGS.filepath
-    filepath = ""
+    # filepath = ""
     from_lang = getattr(FLAGS, "from-lang")
     to_lang = getattr(FLAGS, "to-lang")
     dualtext = FLAGS.dualtext
@@ -230,6 +230,7 @@ def proc_argv(argv):  # noqa
         [re.sub(r"[ ]+", " ", elm).strip() for elm in text.splitlines() if elm.strip()]
     )
 
+    logger.info("Going online to deepl.com, it my take a while...")
     try:
         _ = deepl_tr_pp(text, from_lang, to_lang, debug)
         trtext = LOOP.run_until_complete(_)
@@ -238,6 +239,7 @@ def proc_argv(argv):  # noqa
         logger.error("Unable to translate, exiting")
         raise SystemExit(1)
 
+    logger.info("Back to local, processing what we got...")
     lines1 = text.splitlines()
     lines2 = trtext.splitlines()
 

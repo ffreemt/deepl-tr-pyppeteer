@@ -1,11 +1,11 @@
 # deepl-tr-pyppeteer
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/ba7c2468eb574642892676deafb98ecc)](https://www.codacy.com/gh/ffreemt/deepl-tr-pyppeteer/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ffreemt/deepl-tr-pyppeteer&amp;utm_campaign=Badge_Grade)[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)[![PyPI version](https://badge.fury.io/py/deepl-tr-pyppeteer.svg)](https://badge.fury.io/py/deepl-tr-pyppeteer)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/ba7c2468eb574642892676deafb98ecc)](https://www.codacy.com/gh/ffreemt/deepl-tr-pyppeteer/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ffreemt/deepl-tr-pyppeteer&amp;utm_campaign=Badge_Grade)[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)[![PyPI version](https://badge.fury.io/py/deepl-tr-pyppeteer.svg)](https://badge.fury.io/py/deepl-tr-pp)
 
 deepl translate via pyppeteer
 
 ## Installation
 ```bash
-pip install deepl-tr-pyppeteer
+pip install deepl-tr-pp
 ```
 or clone the github repo, install and run from the source
 ```bash
@@ -21,6 +21,8 @@ poetry run python -m deepl_tr_pp  # equivalent to executing `deepl-tr-pp` below
 Languages supported: `["en", "de", "zh", "fr", "es", "pt", "it", "nl", "pl", "ru", "ja"]` (currently supported by the website)
 
 Input file formats currently supported: txt and docx, files with other suffix (e.g., .csv, .tsv) will simply treated as text.
+
+To interrupt anytime: `Ctrl-c`. The first few versions may not run too smoothly (for example, no windows shows up for `browsing for filename`). If it hangs, press `control` and `c` at the same time to exit.
 
 ```bash
 deepl-tr-pp -p file.txt  # en to zh, default en to zh, dualtext output, docx format
