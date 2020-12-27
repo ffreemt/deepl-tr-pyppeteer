@@ -7,18 +7,40 @@ deepl translate via pyppeteer
 ```bash
 pip install deepl-tr-pyppeteer
 ```
-or clone the github repo and install from source
+or clone the github repo, install and run from the source
 ```bash
 git clone https://github.com/ffreemt/deepl-tr-pyppeteer
 cd deepl-tr-pyppeteer
 pip install poetry
 poetry install --no-dev
+
+poetry run python -m deepl_tr_pp  # equivalent to deepl-tr-pp below
 ```
 
 ## Usage
+Languages supported: ["en", "de", "zh", "fr", "es", "pt", "it", "nl", "pl", "ru", "ja"] (currenly supported by the website)
+
+Input file formats currently supported: txt and docx, files with other suffix (e.g., .csv, .tsv) will simply treated as text.
+
 ```bash
-deepl-tr-pp -p file.txt -f en -t zh
+deepl-tr-pp -p file.txt  # en to zh, default en to zh, dualtext output, docx format
+deepl-tr-pp -p file.txt -f de   # de to zh
+deepl-tr-pp -p file.txt -f de -t en  # de to en
+
+deepl-tr-pp   # browse for a file, en to zh
+
+deepl-tr-pp --copyfrom   # text from the clipboard, en to zh
+
+deepl-tr-pp -p file.txt --nodualtext # en to zh, default en to zh, just translate text
+
+deepl-tr-pp -p file.txt --nooutput-docx # en to zh, default en to zh, dualtext, text format
 ```
+
+By default, the text version of the output is copied to the clipboard, turn this off, by --nocopyto
+```bash
+deepl-tr-pp -p file.txt --nocopyto
+```
+
 ### Finer Control Using .env and Environ Variables
 To show the browser in action or set debug or set proxy, create `.env` and set the corresponding environ variables (these can also be set from the command line, e.g., `set DEEPLTR_HEADFUL=true`):
 ```bash
@@ -40,6 +62,28 @@ DEEPLTR_DEBUG=true
 ## Help
 ```bash
 deepl-tr-pp  --helpshort
+```
+```bash
+  --[no]copyfrom: copy from clipboard, default false, will attempt to browser
+    for a filepath if copyfrom is set false)
+    (default: 'false')
+  --[no]copyto: copy the result to clipboard
+    (default: 'true')
+  --[no]debug: print debug messages.
+    (default: 'false')
+  -d,--[no]dualtext: dualtext or no dualtext output
+    (default: 'true')
+  -p,--filepath: source text filepath (relative or absolute), if not provided,
+    clipboard content will be used as source text.
+    (default: '')
+  -f,--from-lang: source language, default english)
+    (default: 'en')
+  -o,--[no]output-docx: output docx or text
+    (default: 'true')
+  -t,--to-lang: target language, default chinese
+    (default: 'zh')
+  --[no]version: print version and exit
+    (default: 'false')
 ```
 or
 

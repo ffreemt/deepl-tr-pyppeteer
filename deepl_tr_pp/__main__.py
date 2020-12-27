@@ -52,7 +52,7 @@ flags.DEFINE_boolean("copyto", True, "copy the result to clipboard")
 flags.DEFINE_boolean(
     "copyfrom",
     False,
-    "copy from clipboard, default false, will attempt to browser for a filepath if copyfrom is set false)",
+    "copy from clipboard, default false, will attempt to browser for a filepath if copyfrom is set to false)",
 )
 flags.DEFINE_boolean("debug", False, "print debug messages.")
 flags.DEFINE_boolean("version", False, "print version and exit")
