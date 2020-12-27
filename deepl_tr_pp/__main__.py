@@ -17,6 +17,7 @@ from docx import Document
 import pyperclip
 import logzero
 from logzero import logger
+import signal
 
 from deepl_tr_pp import __version__
 from deepl_tr_pp.deepl_tr_pp import LOOP, DEBUG, BROWSER
@@ -25,6 +26,9 @@ from deepl_tr_pp.load_text import load_text
 from deepl_tr_pp.gen_docx import gen_docx
 from deepl_tr_pp.gen_docx1 import gen_docx1
 from deepl_tr_pp.browse_filename import browse_filename
+
+signal.signal(signal.SIGINT, signal.SIG_DFL)
+# print('Press Ctrl+C to quit\n')
 
 FLAGS = flags.FLAGS
 _ = """
@@ -189,6 +193,7 @@ def proc_argv(argv):  # noqa
         # browse for a file if FLAGS.copyfrom not set
 
         # fetch text from clipboard if copyfrom set and filepath not set
+        logger.debug("copyfrom %s", copyfrom)
         if copyfrom:
             filepath = "clipboard.txt"
             text = pyperclip.paste()
@@ -198,10 +203,16 @@ def proc_argv(argv):  # noqa
                     " There appears to be nothing in the clipboard.\n\tGoodbye!"
                 )
         else:  # browse
+            logger.info("browsing for a filename")
+            # TODO: tkinter windows does not show up
             filepath = browse_filename()
-            if not filepath:
+            # filepath = ""
+            if not Path(filepath).resolve().is_file():
                 logger.debug("filepath [%s]", filepath)
-                logger.info("Cancelled or invalid file selected, no more option left but to exit.")
+                logger.info(
+                    "Cancelled or invalid file selected, no more option left but to exit."
+                )
+                return None
 
         # text = " ".join(argv[1:])
         # logger.debug("argv from terminal: %s", text)

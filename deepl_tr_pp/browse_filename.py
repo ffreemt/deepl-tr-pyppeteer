@@ -1,4 +1,4 @@
-"""Browse for a filename.
+r"""Browse for a filename.
 
 https://pythonspot.com/tk-file-dialogs/
 filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes=(("jpeg files","*.jpg"),("all files","*.*")))
@@ -6,8 +6,8 @@ filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes=(("j
 # import sys
 from pathlib import Path
 
-import tkinter as Tkinter
-from tkinter import filedialog as tkFileDialog
+import tkinter
+from tkinter import filedialog
 
 
 # fmt: off
@@ -23,10 +23,13 @@ def browse_filename(
         )
 ):
     # fmt: on
-    """Browse for a filename."""
-    root = Tkinter.Tk()
+    """Browse for a filename.
+
+    or None when cancelled.
+    """
+    root = tkinter.Tk()
     root.withdraw()
-    filename = tkFileDialog.askopenfilename(
+    filename = filedialog.askopenfilename(
         parent=root,
         initialdir=initialdir,
         title=title,

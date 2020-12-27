@@ -14,11 +14,11 @@ cd deepl-tr-pyppeteer
 pip install poetry
 poetry install --no-dev
 
-poetry run python -m deepl_tr_pp  # equivalent to deepl-tr-pp below
+poetry run python -m deepl_tr_pp  # equivalent to executing `deepl-tr-pp` below
 ```
 
 ## Usage
-Languages supported: ["en", "de", "zh", "fr", "es", "pt", "it", "nl", "pl", "ru", "ja"] (currenly supported by the website)
+Languages supported: `["en", "de", "zh", "fr", "es", "pt", "it", "nl", "pl", "ru", "ja"]` (currently supported by the website)
 
 Input file formats currently supported: txt and docx, files with other suffix (e.g., .csv, .tsv) will simply treated as text.
 
@@ -42,7 +42,7 @@ deepl-tr-pp -p file.txt --nocopyto
 ```
 
 ### Finer Control Using .env and Environ Variables
-To show the browser in action or set debug or set proxy, create `.env` and set the corresponding environ variables (these can also be set from the command line, e.g., `set DEEPLTR_HEADFUL=true`):
+To show the browser in action or set debug or proxy, create an `.env` file and set the corresponding environ variables (these can also be set from the command line, e.g., `set DEEPLTR_HEADFUL=true` (in Windows) or `export DEEPLTR_HEADFUL=true` (in Linux) ):
 ```bash
 # .env
 DEEPLTR_HEADFUL=true
@@ -101,5 +101,6 @@ deepl-tr-pp --helpfull
   * `poetry install`
 
   * Activate the virtual environment, e.g., `.venv\Scripts\activate` (In Windows) or `source .venv/bin/activate` (in Linux)
+    * `python -m deepl_tr_pp`
 
   * Code and optionally submit PR
