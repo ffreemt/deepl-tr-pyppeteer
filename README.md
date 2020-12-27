@@ -9,7 +9,7 @@ pip install deepl-tr-pyppeteer
 ```
 or clone the github repo, install and run from the source
 ```bash
-git clone https://github.com/ffreemt/deepl-tr-pyppeteer
+git clone clone https://github.com/ffreemt/deepl-tr-pyppeteer
 cd deepl-tr-pyppeteer
 pip install poetry
 poetry install --no-dev
@@ -90,3 +90,16 @@ or
 ```bash
 deepl-tr-pp --helpfull
 ```
+
+## For Developers
+  * Install `poetry` the way you like it.
+
+  * git clone the repo `https://github.com/ffreemt/deepl-tr-pyppeteer`,
+`cd deepl-tr-pyppeteer`
+    * Or fork first and clone pull your own repo.
+
+  * `poetry install`
+
+  * Activate the virtual environment, e.g., `.venv\Scripts\activate` (In Windows) or `source .venv/bin/activate` (in Linux)
+
+  * Code and optionally submit PR
