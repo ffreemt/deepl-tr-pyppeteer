@@ -28,11 +28,14 @@ def browse_filename(
     or None when cancelled.
     """
     root = tkinter.Tk()
-    root.withdraw()
+    # root.withdraw()
+    root.attributes('-alpha', 0.05)
+    root.focus_force()
     filename = filedialog.askopenfilename(
         parent=root,
         initialdir=initialdir,
         title=title,
         filetypes=filetypes,
     )
+    # root.withdraw()
     return filename

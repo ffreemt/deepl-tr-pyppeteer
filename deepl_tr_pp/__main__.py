@@ -214,6 +214,9 @@ def proc_argv(argv):  # noqa
                 )
                 return None
 
+        # logger.debug("Exit soon...")
+        # raise SystemExit("exit by intentio")
+
         # text = " ".join(argv[1:])
         # logger.debug("argv from terminal: %s", text)
 

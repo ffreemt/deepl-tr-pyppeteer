@@ -7,6 +7,10 @@ deepl translate via pyppeteer
 ```bash
 pip install deepl-tr-pp
 ```
+To update to the latest version:
+```bash
+pip install deepl-tr-pp -U
+```
 or clone the github repo, install and run from the source
 ```bash
 git clone clone https://github.com/ffreemt/deepl-tr-pyppeteer
@@ -22,7 +26,7 @@ Languages supported: `["en", "de", "zh", "fr", "es", "pt", "it", "nl", "pl", "ru
 
 Input file formats currently supported: txt and docx, files with other suffix (e.g., .csv, .tsv) will simply treated as text.
 
-To interrupt anytime: `Ctrl-c`. The first few versions may not run too smoothly (for example, no windows shows up for `browsing for filename`). If it hangs, press `control` and `c` at the same time to exit.
+To interrupt anytime: `Ctrl-c`. The first few versions may not run too smoothly. If it hangs, press `control` and `c` at the same time to exit.
 
 ```bash
 deepl-tr-pp -p file.txt  # en to zh, default en to zh, dualtext output, docx format
@@ -33,12 +37,12 @@ deepl-tr-pp   # browse for a file, en to zh
 
 deepl-tr-pp --copyfrom   # text from the clipboard, en to zh
 
-deepl-tr-pp -p file.txt --nodualtext # en to zh, default en to zh, just translate text
+deepl-tr-pp -p file.txt --nodualtext  # en to zh, default en to zh, just translate text
 
-deepl-tr-pp -p file.txt --nooutput-docx # en to zh, default en to zh, dualtext, text format
+deepl-tr-pp -p file.txt --nooutput-docx  # default en to zh, dualtext, text format
 ```
 
-By default, the text version of the output is copied to the clipboard, turn this off, by --nocopyto
+By default, the text version of the output is copied to the clipboard, turn this off by --nocopyto
 ```bash
 deepl-tr-pp -p file.txt --nocopyto
 ```
@@ -102,7 +106,7 @@ deepl-tr-pp --helpfull
 
   * `poetry install`
 
-  * Activate the virtual environment, e.g., `.venv\Scripts\activate` (In Windows) or `source .venv/bin/activate` (in Linux)
+  * Activate the virtual environment, e.g., `.venv\Scripts\activate` (In Windows) or `source .venv/bin/activate` (in Linux) provided you set `poetry config --local virtualenvs.in-project true`
     * `python -m deepl_tr_pp`
 
   * Code and optionally submit PR
