@@ -1,5 +1,5 @@
 # deepl-tr-pyppeteer
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/ba7c2468eb574642892676deafb98ecc)](https://www.codacy.com/gh/ffreemt/deepl-tr-pyppeteer/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ffreemt/deepl-tr-pyppeteer&amp;utm_campaign=Badge_Grade)[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)[![PyPI version](https://badge.fury.io/py/deepl-tr-pyppeteer.svg)](https://badge.fury.io/py/deepl-tr-pp)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/ba7c2468eb574642892676deafb98ecc)](https://www.codacy.com/gh/ffreemt/deepl-tr-pyppeteer/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ffreemt/deepl-tr-pyppeteer&amp;utm_campaign=Badge_Grade)[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)[![PyPI version](https://badge.fury.io/py/deepl-tr-pp.svg)](https://badge.fury.io/py/deepl-tr-pp)
 
 deepl translate via pyppeteer
 
