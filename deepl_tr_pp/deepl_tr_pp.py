@@ -134,6 +134,16 @@ async def deepl_tr_pp(  # noqa: C901
     else:
         logzero.loglevel(20)
 
+    try:
+        text = text.strip()
+    except Exception as exc:
+        logger.error(" text.strip() exc: %s, exiting", exc)
+        raise SystemExit(1)
+
+    if not text:
+        logger.warning(" Empty text for whatever reason, end")
+        return ""
+
     langs = ["en", "de", "zh", "fr", "es", "pt", "it", "nl", "pl", "ru", "ja"]
 
     try:

@@ -85,7 +85,7 @@ def _cleanup():
     try:
         LOOP.run_until_complete(BROWSER.close())
     except Exception as exc:
-        logger.error(" BROWSER.close() exc: %s", exc)
+        logger.debug(" BROWSER.close() exc: %s", exc)
 
 
 def _leave_1(*args):
@@ -213,6 +213,12 @@ def proc_argv(argv):  # noqa
                     "Cancelled or invalid file selected, no more option left but to exit."
                 )
                 return None
+            logger.info("filepath: %s", filepath)
+            try:
+                text = load_text(Path(filepath))
+            except Exception as exc:
+                logger.error("load_text(%s) exc: %s, quitting.", filepath, exc)
+                return None
 
         # logger.debug("Exit soon...")
         # raise SystemExit("exit by intentio")
@@ -233,7 +239,15 @@ def proc_argv(argv):  # noqa
         [re.sub(r"[ ]+", " ", elm).strip() for elm in text.splitlines() if elm.strip()]
     )
 
-    logger.info("Going online to deepl.com, it my take a while...")
+    if not text.strip():
+        logger.warning("No text available, quitting.")
+        return None
+
+    logger.info(" %s chars: %s..%s", len(text), text[:30], text[-30:])
+
+    # raise SystemExit("Exit by intention")
+
+    logger.info("Going online to deepl.com, it may take a while...")
     try:
         _ = deepl_tr_pp(text, from_lang, to_lang, debug)
         trtext = LOOP.run_until_complete(_)
@@ -248,14 +262,23 @@ def proc_argv(argv):  # noqa
 
     _ = len(lines1)
     _t1 = len(lines2)
+
+    logger.info(" text: %s, trtext: %s", _, _t1)
+    logger.info("last 3 paras of text: %s", lines1[-3:])
+    logger.info("last 3 paras of trtext: %s", lines2[-3:])
+
     if not _ == _t1:
         logger.warning(
             "There may be a problem, numbers of praras do not match: %s != %s", _, _t1
         )
-        logger.info("We proceed anywa.")
+        logger.info("We proceed anyway.")
 
     pairs = [*zip_longest(lines1, lines2, fillvalue="")]
-    text1, text2 = [*zip(*pairs)]
+    try:
+        text1, text2 = [*zip(*pairs)]
+    except Exception as exc:
+        logger.error(" text1, text2 = [*zip(*pairs)] exc: %s", exc)
+        raise SystemExit(1)
 
     if dualtext:
         outtext = "\n".join(["\n".join(elm) for elm in pairs])

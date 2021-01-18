@@ -16,6 +16,6 @@ class Settings(BaseSettings):  # pylint: disable=too-few-public-methods
         """Config."""
 
         env_prefix = "deepltr_"
-        extra = "allow"
+        # extra = "allow"
         env_file = ".env"
         env_file_encoding = "utf-8"  # pydantic doc

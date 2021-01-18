@@ -10,6 +10,7 @@ pip install deepl-tr-pp
 To update to the latest version:
 ```bash
 pip install deepl-tr-pp -U
+# poetry add deepl-tr-pp@latest  # if you use poetry
 ```
 or clone the github repo, install and run from the source
 ```bash

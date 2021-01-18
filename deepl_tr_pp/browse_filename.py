@@ -37,5 +37,5 @@ def browse_filename(
         title=title,
         filetypes=filetypes,
     )
-    # root.withdraw()
+    root.withdraw()
     return filename
