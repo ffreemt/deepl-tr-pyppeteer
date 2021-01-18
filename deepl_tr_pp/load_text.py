@@ -71,7 +71,7 @@ def load_text(filepath: Union[str, Path]) -> str:
         tot_lines,
         len(text),
     )
-
+    _ = """
     if len(text) + (tot_lines - 1) * 5 > 5000:
         logger.warning(
             " Text too long (the current version is limited to 5000 chars), text will be trimmed."
@@ -79,4 +79,5 @@ def load_text(filepath: Union[str, Path]) -> str:
         logger.info(
             "Future versions of deepl-tr-pyppeteer will support longer text, stay tuned."
         )
+    # """
     return text

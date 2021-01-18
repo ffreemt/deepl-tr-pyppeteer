@@ -18,11 +18,14 @@ import pyperclip
 import logzero
 from logzero import logger
 import signal
+from tqdm import tqdm
 
 from deepl_tr_pp import __version__
 from deepl_tr_pp.deepl_tr_pp import LOOP, DEBUG, BROWSER
 from deepl_tr_pp.deepl_tr_pp import deepl_tr_pp
 from deepl_tr_pp.load_text import load_text
+from deepl_tr_pp.seg_text import seg_text
+from deepl_tr_pp.gen_filename import gen_filename
 from deepl_tr_pp.gen_docx import gen_docx
 from deepl_tr_pp.gen_docx1 import gen_docx1
 from deepl_tr_pp.browse_filename import browse_filename
@@ -243,18 +246,43 @@ def proc_argv(argv):  # noqa
         logger.warning("No text available, quitting.")
         return None
 
-    logger.info(" %s chars: %s..%s", len(text), text[:30], text[-30:])
+    logger.info(" %s chars: %s ... %s", len(text), text[:50], text[-50:])
 
     # raise SystemExit("Exit by intention")
 
     logger.info("Going online to deepl.com, it may take a while...")
-    try:
-        _ = deepl_tr_pp(text, from_lang, to_lang, debug)
-        trtext = LOOP.run_until_complete(_)
-    except Exception as exc:
-        logger.error("deepl_tr_pp exc: %s", exc)
-        logger.error("Unable to translate, exiting")
-        raise SystemExit(1)
+
+    def translate(text, from_lang, to_lang):
+        """Should consider separate function to handle this
+        with async/asyncio.gather?"""
+        try:
+            _ = deepl_tr_pp(text, from_lang, to_lang, debug)
+            trtext = LOOP.run_until_complete(_)
+        except Exception as exc:
+            logger.error("deepl_tr_pp exc: %s", exc)
+            logger.error("Unable to translate, exiting")
+            raise SystemExit(1)
+        return trtext
+
+    # handle long text
+    _ = """
+    if len(text) < 4500:
+        trtext = translate(text, from_lang, to_lang)
+    else:
+    # """
+
+    text_list = seg_text(text)
+    logger.info("text segmented to %s", len(text_list))
+    trtext_list = []
+    for seg in tqdm(text_list):
+        trseg = translate(seg, from_lang, to_lang)
+        # handle mismatch
+        if len(seg.splitlines()) == len(trseg.splitlines()):
+            _ = zip_longest(seg.splitlines(), trseg.splitlines(), fillvalue="")
+            _, trseg = zip(*_)
+            trseg = "\n".join(trseg)
+        trtext_list.append(trseg)
+    trtext = "\n".join(trtext_list)
 
     logger.info("Back to local, processing what we got...")
     lines1 = text.splitlines()
@@ -264,8 +292,8 @@ def proc_argv(argv):  # noqa
     _t1 = len(lines2)
 
     logger.info(" text: %s, trtext: %s", _, _t1)
-    logger.info("last 3 paras of text: %s", lines1[-3:])
-    logger.info("last 3 paras of trtext: %s", lines2[-3:])
+    logger.info("last para of text: %s", lines1[-1:])
+    logger.info("last para of trtext: %s", lines2[-1:])
 
     if not _ == _t1:
         logger.warning(
@@ -273,12 +301,17 @@ def proc_argv(argv):  # noqa
         )
         logger.info("We proceed anyway.")
 
-    pairs = [*zip_longest(lines1, lines2, fillvalue="")]
+    pairs = [*zip(lines1, lines2)]
+    _ = """
+    # pairs = [*zip_longest(lines1, lines2, fillvalue="")]
     try:
         text1, text2 = [*zip(*pairs)]
     except Exception as exc:
         logger.error(" text1, text2 = [*zip(*pairs)] exc: %s", exc)
         raise SystemExit(1)
+    # """
+
+    text1, text2 = lines1, lines2
 
     if dualtext:
         outtext = "\n".join(["\n".join(elm) for elm in pairs])
@@ -300,6 +333,9 @@ def proc_argv(argv):  # noqa
     fpath = Path(filepath).expanduser().resolve()
     if output_docx:
         ofile = fpath.parent / f"{fpath.stem}-tr.docx"
+        # do not overwrite
+        ofile = gen_filename(ofile)
+
         try:
             document.save(ofile)
             logger.info(" File written to %s", ofile)
@@ -307,6 +343,9 @@ def proc_argv(argv):  # noqa
             logger.error(" Failed to write %s, exc: %s", ofile, exc)
     else:
         ofile = fpath.parent / f"{fpath.stem}-tr.txt"
+        # do not overwrite
+        ofile = Path(gen_filename(ofile))
+
         try:
             ofile.write_text(outtext, "utf-8")
             logger.info(" File written to %s", ofile)

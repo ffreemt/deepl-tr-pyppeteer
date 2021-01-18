@@ -18,6 +18,7 @@ from urllib.parse import quote
 
 from pyppeteer import launch
 from pyquery import PyQuery as pq
+from itertools import zip_longest
 import logzero
 from logzero import logger
 
@@ -120,6 +121,7 @@ async def deepl_tr_pp(  # noqa: C901
         # proxy: Optional[str] = None,
         # waitfor: Optional[float] = None,
         browser=BROWSER,
+        sep: str = "\n_x_\n",  # in separate line in order to be kept
 ) -> Optional[str]:
     """Deepl via pyppeteer.
 
@@ -194,10 +196,11 @@ async def deepl_tr_pp(  # noqa: C901
     else:
         page.setDefaultNavigationTimeout(600000)  # 10 min
 
-    text = re.sub("[ ]+", " ", text)
+    # remove |][ which seem to interfer with \n_x_\n
+    text = re.sub(r"[ |[\]]+", " ", text)
     _ = [elm.strip() for elm in text.splitlines() if elm.strip()]
     len0 = len(text.splitlines())
-    text = "\n_x_\n".join(_)
+    text = sep.join(_)
     if len(text) > 5000:
         text = text[:5000]
         logger.warning(" text length (%s) > 5000, trimming to 5000", len(text))
@@ -277,9 +280,9 @@ async def deepl_tr_pp(  # noqa: C901
         await asyncio.sleep(0)
 
     # logger.debug("res: %s", res.splitlines()[-3:])
-    logger.debug("res: %s", res.split(' _x_ ')[-3:])
+    logger.debug("res: %s", res.split(sep.strip())[-3:])
 
-    res = res.replace(" _x_ ", "\n")
+    res = res.replace(sep.strip(), "\n")
 
     if not debug:
         ...
@@ -288,12 +291,14 @@ async def deepl_tr_pp(  # noqa: C901
     # warn if # of paras not match
     _ = len(res.splitlines())
     if not len0 == _:
-        logger.warning(" # of original paras (%s) not match # of translated paras (%s)", len0, _)
-        logger.warning(" something weird may have occurred.")
+        logger.error(" # of original paras (%s) not match # of translated paras (%s)", len0, _)
+        logger.error(" something weird may have occurred.")
+        logger.error(" But we proceed nevertheless.")
 
     await asyncio.sleep(0.1)
 
     # copy('\n'.join(wrap(res, 45)))
     # logger.info('exit: %s', text[:200])
 
-    return res
+    # make up some lines when necessary
+    return res + "\n " * min(0, _ - len0)
