@@ -338,7 +338,10 @@ def proc_argv(argv):  # noqa
 
         try:
             document.save(ofile)
-            logger.info(" File written to %s", ofile)
+            logger.info("\n\t File written to %s", ofile)
+
+            # write-permission problem: would this help?
+            del document
         except Exception as exc:
             logger.error(" Failed to write %s, exc: %s", ofile, exc)
     else:
