@@ -53,6 +53,13 @@ def gen_docx(
 
     def add_para(document, elm: str, color: bool = True, highlight: bool = False):
         paragraph = document.add_paragraph()
+
+        # remove leading and trailing spaces
+        try:
+            elm = elm.strip()
+        except Exception as exc:
+            logger.error(exc)
+
         run = paragraph.add_run(elm)
         font = run.font
         if highlight:
