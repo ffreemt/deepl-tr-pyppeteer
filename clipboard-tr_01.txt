@@ -1,0 +1,4 @@
+abc 如果 thr 不是 None 且 thr < 0: 
+ def thr = mean_ - 2 * std_ ． 
+ 如果th为None: 
+ x thr = mean_ - .68 * std_ (%)
