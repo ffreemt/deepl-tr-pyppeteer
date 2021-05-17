@@ -38,7 +38,7 @@ deepl-tr-pp   # browse for a file, en to zh
 
 deepl-tr-pp --copyfrom   # text from the clipboard, en to zh
 
-deepl-tr-pp -p file.txt --nodualtext  # en to zh, default en to zh, just translate text
+deepl-tr-pp -p file.txt --nodualtext  # en to zh, default en to zh, just translated text (no dualtext)
 
 deepl-tr-pp -p file.txt --nooutput-docx  # default en to zh, dualtext, text format
 ```

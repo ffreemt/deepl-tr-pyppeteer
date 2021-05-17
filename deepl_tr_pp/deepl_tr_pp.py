@@ -19,7 +19,7 @@ from urllib.parse import quote
 
 from pyppeteer import launch
 from pyquery import PyQuery as pq
-from itertools import zip_longest
+# from itertools import zip_longest
 import logzero
 from logzero import logger
 
@@ -300,7 +300,7 @@ async def deepl_tr_pp(  # noqa: C901
     res = res.replace(sep_, "\n")
     if debug:
         logger.debug("pprint")
-        pprint(["res", len(res.splitlines())]),
+        pprint(["res", len(res.splitlines())])
         pprint(res)
 
     # do not close page if DEBUG is on
