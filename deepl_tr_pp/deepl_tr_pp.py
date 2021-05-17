@@ -284,8 +284,11 @@ async def deepl_tr_pp(  # noqa: C901
         await asyncio.sleep(0)
         # await asyncio.sleep(0)
 
+    # modi
     css_ = ".lmt__translations_as_text__text_btn"
     res = doc(css_).html()
+    if res is None:
+        res = ""
 
     # logger.debug("res: %s", res.splitlines()[-3:])
     sep_ = sep.strip()
@@ -310,6 +313,8 @@ async def deepl_tr_pp(  # noqa: C901
         deepl_tr_pp.res = res
 
     # warn if # of paras not match
+    if res is None:
+        res = ""
     _ = len(res.splitlines())
     if len0 != _:
         logger.error(" # of original paras (%s) not match # of translated paras (%s)", len0, _)

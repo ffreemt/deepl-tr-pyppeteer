@@ -276,6 +276,11 @@ def proc_argv(argv):  # noqa
     trtext_list = []
     for seg in tqdm(text_list):
         trseg = translate(seg, from_lang, to_lang)
+
+        # in case None is returned
+        if trseg is None:
+            trseg = ""
+
         # handle mismatch
         if len(seg.splitlines()) == len(trseg.splitlines()):
             _ = zip_longest(seg.splitlines(), trseg.splitlines(), fillvalue="")
