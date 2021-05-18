@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "deepl-tr-pp"
-version = "0.1.3"
+version = "0.1.4-alpha.0"
 description = "deepl translate via pyppeteer"
 authors = ["freemt"]
 license = "MIT"
