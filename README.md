@@ -25,7 +25,7 @@ poetry run python -m deepl_tr_pp  # equivalent to executing `deepl-tr-pp` below
 ## Usage
 Languages supported: `["en", "de", "zh", "fr", "es", "pt", "it", "nl", "pl", "ru", "ja"]` (currently supported by the website)
 
-Input file formats currently supported: txt and docx, files with other suffix (e.g., .csv, .tsv) will simply treated as text.
+Input file formats currently supported: txt and docx, files with other suffix (e.g., .csv, .tsv) will simply be treated as text.
 
 To interrupt anytime: `Ctrl-c`. The first few versions may not run too smoothly. If it hangs, press `control` and `c` at the same time to exit.
 
