@@ -208,7 +208,8 @@ async def deepl_tr_pp(  # noqa: C901
         text = text[:5000]
         logger.warning(" text length (%s) > 5000, trimming to 5000", len(text))
 
-    url_ = f"{URL}#{from_lang}/{to_lang}/{quote(text)}"
+    urltext = quote(text).replace("/","%5C%2F")
+    url_ = f"{URL}#{from_lang}/{to_lang}/{urltext}"
 
     count = 0
     while count < 3:
