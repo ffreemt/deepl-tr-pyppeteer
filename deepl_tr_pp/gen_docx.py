@@ -51,7 +51,8 @@ def gen_docx(
         logger.info("(A template file dictates fonts, line spacing, margins, etc.)")
         document = Document()
 
-    def add_para(document, elm: str, color: bool = True, highlight: bool = False):
+    # def add_para(document, elm: str, color: bool = True, highlight: bool = False):
+    def add_para(document, elm: str, color: bool = False, highlight: bool = True):
         paragraph = document.add_paragraph()
 
         # remove leading and trailing spaces
@@ -64,12 +65,16 @@ def gen_docx(
         font = run.font
         if highlight:
             font.highlight_color = WD_COLOR_INDEX.GRAY_25  # pylint: disable=E1101
-            # font.highlight_color = RGBColor(0x40, 0x40, 0x40)
+
+            # https://www.rapidtables.com/web/color/Yellow_Color.html
+            # lightyellow	#FFFFE0	rgb(255,255,224) 
+            # yellow	#FFFF00	rgb(255,255,0)
+            # font.highlight_color = RGBColor(0xFF, 0xFF, 0xE0)  # does no work pylint: disable=E1101
         if color:
-            font.color.rgb = RGBColor(0xFF, 0x00, 0x00)  # noqa
+            font.color.rgb = RGBColor(0xff, 0xff, 0xe0)  # noqa
 
     for elm0, elm1 in zip_longest(src, tgt, fillvalue=""):
-        add_para(document, elm0)  # red
-        add_para(document, elm1, False)  # normal
+        add_para(document, elm0, False, True)  # 
+        add_para(document, elm1, False, False)  # 
 
     return document
