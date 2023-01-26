@@ -64,7 +64,9 @@ def gen_docx(
         run = paragraph.add_run(elm)
         font = run.font
         if highlight:
-            font.highlight_color = WD_COLOR_INDEX.GRAY_25  # pylint: disable=E1101
+            # font.highlight_color = WD_COLOR_INDEX.GRAY_25  # pylint: disable=E1101
+            # font.highlight_color = WD_COLOR_INDEX.WHITE  # pylint: disable=E1101  8
+            font.highlight_color = WD_COLOR_INDEX.YELLOW  # pylint: disable=E1101  8
 
             # https://www.rapidtables.com/web/color/Yellow_Color.html
             # lightyellow	#FFFFE0	rgb(255,255,224) 
